@@ -1,0 +1,63 @@
+#define ENA 9
+#define IN1 12 
+#define IN2 11
+#define ENB 6
+#define IN3 7
+#define IN4 8
+
+#define SPEED 190 //set motor speed
+
+void moveForward(){ //declare forward function 
+  digitalWrite(IN1, HIGH); 
+  digitalWrite(IN2, LOW); 
+  digitalWrite(IN3, HIGH); 
+  digitalWrite(IN4, LOW); 
+  delay(1000); // 1 second delay
+}
+
+void turnRight(){ //declare turn right function 
+  digitalWrite(IN1, LOW);
+  digitalWrite(IN2, HIGH);
+  digitalWrite(IN3, HIGH);
+  digitalWrite(IN4, LOW);
+  delay(865); //8.65 second delay, timing gives almost perfect 90 degree turn
+}
+
+void moveStop(){ // declare stop function
+  digitalWrite(IN1, LOW);
+  digitalWrite(IN2, LOW);
+  digitalWrite(IN3, LOW);
+  digitalWrite(IN4, LOW);
+  delay(500); //delay of half a second 
+}
+
+void setup() {
+  pinMode(ENA, OUTPUT); //sets ENA pin to output
+  pinMode(IN1, OUTPUT); //sets IN1 pin to output
+  pinMode(IN2, OUTPUT); //sets IN2 pin to output
+  pinMode(ENB, OUTPUT); //sets ENB pin to output
+  pinMode(IN3, OUTPUT); //sets IN3 pin to output
+  pinMode(IN4, OUTPUT); //sets IN4 pin to output
+
+  pinMode(3, OUTPUT); //sets pin 3, the buzzer pin, to output
+
+  analogWrite(ENA, SPEED);
+  analogWrite(ENB, SPEED);
+
+  for (int i = 0; i < 16; i++) { //loops all code 4 times (i think)
+    analogWrite(3, 0); //turns off the buzzer (no really)
+    moveForward(); //calls forward function 
+    moveStop(); //calls stop function
+    turnRight(); //calls turn right function
+    moveStop(); //calls stop function
+    analogWrite(3, 300); //turns on the buzzer 
+    delay(500); //turns on the buzzer for half a second 
+    analogWrite(3, 0); //turns off the buzzer (no really)
+    delay(1000); //delay of 1 second 
+    
+  }
+}
+
+void loop(){
+
+}
